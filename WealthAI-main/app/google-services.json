@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "370344040181",
+    "project_id": "wealth-ai-d8e14",
+    "storage_bucket": "wealth-ai-d8e14.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:370344040181:android:64ab13e917ff71303c17bc",
+        "android_client_info": {
+          "package_name": "com.example.infotrade"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwlZa36OiZbCr2VX2MkFcsI32DmQAi2pE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:370344040181:android:18a56c96c41276163c17bc",
+        "android_client_info": {
+          "package_name": "com.example.wealthai"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwlZa36OiZbCr2VX2MkFcsI32DmQAi2pE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
