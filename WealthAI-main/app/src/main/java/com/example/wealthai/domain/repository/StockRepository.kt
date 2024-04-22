@@ -4,6 +4,7 @@ import com.example.wealthai.domain.model.BalanceSheet
 import com.example.wealthai.domain.model.CashFlow
 import com.example.wealthai.domain.model.CompanyInfo
 import com.example.wealthai.domain.model.CompanyListing
+import com.example.wealthai.domain.model.DailyInfo
 import com.example.wealthai.domain.model.IncomeStatement
 import com.example.wealthai.domain.model.IntradayInfo
 import com.example.wealthai.util.Resource
@@ -19,6 +20,10 @@ interface StockRepository {
     suspend fun getIntradayInfo(
         symbol: String
     ): Resource<List<IntradayInfo>>
+
+    suspend fun getDailyInfo(
+        symbol: String
+    ): Resource<List<DailyInfo>>
 
     suspend fun getCompanyInfo(
         symbol: String

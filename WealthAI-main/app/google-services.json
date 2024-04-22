@@ -12,7 +12,12 @@
           "package_name": "com.example.infotrade"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "370344040181-h8e6g1k4ek86okb7falhh6anf4psp612.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAwlZa36OiZbCr2VX2MkFcsI32DmQAi2pE"
@@ -20,7 +25,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "370344040181-h8e6g1k4ek86okb7falhh6anf4psp612.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     },
@@ -31,7 +41,20 @@
           "package_name": "com.example.wealthai"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "370344040181-ig73obe7ameup6l5aqi85cq1akc017pr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wealthai",
+            "certificate_hash": "dd1d3d01b03963618a2656aee13d809e48420597"
+          }
+        },
+        {
+          "client_id": "370344040181-h8e6g1k4ek86okb7falhh6anf4psp612.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAwlZa36OiZbCr2VX2MkFcsI32DmQAi2pE"
@@ -39,7 +62,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "370344040181-h8e6g1k4ek86okb7falhh6anf4psp612.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

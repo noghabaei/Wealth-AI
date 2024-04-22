@@ -27,6 +27,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDownward
 import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -56,6 +57,13 @@ fun CompanyInfoScreen(
 ) {
     val state = viewModel.companyInfoState
 
+
+    viewModel.getComInfo(symbol)
+    viewModel.getBalanceInfo(symbol)
+    viewModel.getCashInfo(symbol)
+    viewModel.getIncomeInfo(symbol)
+    viewModel.getIntraInfo(symbol)
+
     if (state.error == null) {
         state.company?.let { company ->
             Scaffold(
@@ -63,7 +71,7 @@ fun CompanyInfoScreen(
                     TopAppBar(
                         title = {
                             Text(
-                                company.symbol,
+                                symbol,
                                 style = MaterialTheme.typography.h1,
                                 color = Color.White
                             )

@@ -11,4 +11,8 @@
     <string name="signup">Sign Up</string>
     <string name="already_have_account">Already have an account?</string>
     <string name="purchase_price">Purchase Price</string>
+    <string name="web_client_id">370344040181-h8e6g1k4ek86okb7falhh6anf4psp612.apps.googleusercontent.com</string>
+    <string name="google_name">Google</string>
+    <string name="continue_with">Or continue With</string>
+    <string name="portfolio">Portfolio</string>
 </resources>

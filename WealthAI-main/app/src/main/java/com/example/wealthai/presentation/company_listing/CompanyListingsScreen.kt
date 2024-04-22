@@ -13,6 +13,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import com.example.wealthai.presentation.screens.Screen
 //import com.example.wealthai.presentation.destinations.CompanyInfoScreenDestination
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
@@ -22,7 +24,8 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 @Composable
 @Destination(start = true)
 fun CompanyListingScreen(
-    navigator: DestinationsNavigator,
+//    navigator: DestinationsNavigator,
+    navController: NavController,
     viewModel: CompanyListingsViewModel = hiltViewModel()
 ) {
     val swipeRefreshState = rememberSwipeRefreshState(
@@ -65,7 +68,9 @@ fun CompanyListingScreen(
                             .clickable {
 //                                navigator.navigate(
 //                                    CompanyInfoScreenDestination(company.symbol)
-//                                )
+//                               )
+//                                navController.navigate(Screen.CompanyInfoScreen.route)
+                                navController.navigate(Screen.CompanyInfoScreen.withArg(company.symbol))
                             }
                             .padding(16.dp)
                     )

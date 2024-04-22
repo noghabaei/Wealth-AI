@@ -1,5 +1,6 @@
 package com.example.wealthai.presentation.company_info.companyviewmodel
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -21,22 +22,148 @@ import kotlin.math.abs
 @HiltViewModel
 class CompanyInfoViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
+//    private val symbol: String,
     private val repository: StockRepository
 ): ViewModel() {
 
     var companyInfoState by mutableStateOf(CompanyInfoState())
 
-    init {
-        viewModelScope.launch {
-            val symbol = savedStateHandle.get<String>("symbol") ?: return@launch
-            companyInfoState = companyInfoState.copy(isLoading = true)
-            val companyInfoResult = async { repository.getCompanyInfo(symbol = symbol) }
-            val intradayInfoResult = async { repository.getIntradayInfo(symbol = symbol) }
-            val incomeStatementResult = async { repository.getIncomeStatementInfo(symbol = symbol) }
-            val balanceSheetResult = async { repository.getBalanceSheet(symbol = symbol) }
-            val cashFlowResult = async { repository.getCashFlow(symbol = symbol) }
+//    private var symbol: String = ""
+//
+//    fun initSymbol(symbol: String) {
+//        this.symbol = symbol
+//    }
 
-            when (val result = companyInfoResult.await()) {
+    fun getComInfo(symbol: String) {
+        viewModelScope.launch {
+            when (val companyInfoResult = repository.getCompanyInfo(symbol)) {
+                is Resource.Success -> {
+                    companyInfoState = companyInfoState.copy(
+                        company = companyInfoResult.data,
+                        isLoading = false,
+                        error = null
+                    )
+                }
+                is Resource.Error -> {
+                    companyInfoState = companyInfoState.copy(
+                        isLoading = false,
+                        error = companyInfoResult.message,
+                        company = null
+                    )
+                }
+                else -> Unit
+            }
+        }
+    }
+
+    fun getIntraInfo(symbol: String) {
+        viewModelScope.launch {
+            when (val intradayInfoResult = repository.getIntradayInfo(symbol = symbol)) {
+                is Resource.Success -> {
+                    companyInfoState = companyInfoState.copy(
+                        stockInfos = intradayInfoResult.data ?: emptyList(),
+                        isLoading = false,
+                        error = null
+                    )
+                }
+                is Resource.Error -> {
+                    companyInfoState = companyInfoState.copy(
+                        isLoading = false,
+                        error = intradayInfoResult.message,
+                        company = null
+                    )
+                }
+                else -> Unit
+            }
+        }
+    }
+
+    fun getIncomeInfo(symbol: String) {
+        viewModelScope.launch {
+            when (val incomeStatementResult = repository.getIncomeStatementInfo(symbol = symbol)) {
+                is Resource.Success -> {
+                    companyInfoState = companyInfoState.copy(
+                        incomeStatementInfo = incomeStatementResult.data,
+                        isLoading = false,
+                        error = null
+                    )
+                }
+                is Resource.Error -> {
+                    companyInfoState = companyInfoState.copy(
+                        isLoading = false,
+                        error = incomeStatementResult.message,
+                        company = null
+                    )
+                }
+                else -> Unit
+            }
+        }
+    }
+
+    fun getBalanceInfo(symbol: String) {
+        viewModelScope.launch {
+            when (val balanceSheetResult = repository.getBalanceSheet(symbol = symbol)) {
+                is Resource.Success -> {
+                    companyInfoState = companyInfoState.copy(
+                        balanceSheetInfo = balanceSheetResult.data,
+                        isLoading = false,
+                        error = null
+                    )
+                }
+                is Resource.Error -> {
+                    companyInfoState = companyInfoState.copy(
+                        isLoading = false,
+                        error = balanceSheetResult.message,
+                        company = null
+                    )
+                }
+                else -> Unit
+            }
+        }
+    }
+
+    fun getCashInfo(symbol: String) {
+        viewModelScope.launch {
+            when (val cashFlowResult = repository.getCashFlow(symbol = symbol)) {
+                is Resource.Success -> {
+                    companyInfoState = companyInfoState.copy(
+                        cashFlowInfo = cashFlowResult.data,
+                        isLoading = false,
+                        error = null
+                    )
+                }
+                is Resource.Error -> {
+                    companyInfoState = companyInfoState.copy(
+                        isLoading = false,
+                        error = cashFlowResult.message,
+                        company = null
+                    )
+                }
+                else -> Unit
+            }
+        }
+    }
+
+    fun getDailyInfo(symbol: String) {
+        viewModelScope.launch {
+            val dailyInfoResult = repository.getDailyInfo(symbol = symbol)
+        }
+    }
+
+//    init {
+    fun getInfos(symbol: String) {
+        viewModelScope.launch {
+//            val symbol = savedStateHandle.get<String>("symbol") ?: return@launch
+//            val symbol = "TSLA"
+            Log.d("Symbol", symbol)
+            companyInfoState = companyInfoState.copy(isLoading = true)
+            val companyInfoResult = repository.getCompanyInfo(symbol = symbol)
+            val intradayInfoResult = repository.getIntradayInfo(symbol = symbol)
+            val incomeStatementResult = repository.getIncomeStatementInfo(symbol = symbol)
+            val balanceSheetResult = repository.getBalanceSheet(symbol = symbol)
+            val cashFlowResult = repository.getCashFlow(symbol = symbol)
+            val dailyInfoResult = repository.getDailyInfo(symbol = symbol)
+            when (val result = companyInfoResult) {
                 is Resource.Success -> {
                     companyInfoState = companyInfoState.copy(
                         company = result.data,
@@ -54,7 +181,7 @@ class CompanyInfoViewModel @Inject constructor(
                 else -> Unit
             }
 
-            when (val result = intradayInfoResult.await()) {
+            when (val result = intradayInfoResult) {
                 is Resource.Success -> {
                     companyInfoState = companyInfoState.copy(
                         stockInfos = result.data ?: emptyList(),
@@ -72,7 +199,25 @@ class CompanyInfoViewModel @Inject constructor(
                 else -> Unit
             }
 
-            when (val result = incomeStatementResult.await()) {
+            when (val result = dailyInfoResult) {
+                is Resource.Success -> {
+                    companyInfoState = companyInfoState.copy(
+                        dailyInfos = result.data ?: emptyList(),
+                        isLoading = false,
+                        error = null
+                    )
+                }
+                is Resource.Error -> {
+                    companyInfoState = companyInfoState.copy(
+                        isLoading = false,
+                        error = result.message,
+                        company = null
+                    )
+                }
+                else -> Unit
+            }
+
+            when (val result = incomeStatementResult) {
                 is Resource.Success -> {
                     companyInfoState = companyInfoState.copy(
                         incomeStatementInfo = result.data,
@@ -90,7 +235,7 @@ class CompanyInfoViewModel @Inject constructor(
                 else -> Unit
             }
 
-            when (val result = balanceSheetResult.await()) {
+            when (val result = balanceSheetResult) {
                 is Resource.Success -> {
                     companyInfoState = companyInfoState.copy(
                         balanceSheetInfo = result.data,
@@ -108,7 +253,7 @@ class CompanyInfoViewModel @Inject constructor(
                 else -> Unit
             }
 
-            when (val result = cashFlowResult.await()) {
+            when (val result = cashFlowResult) {
                 is Resource.Success -> {
                     companyInfoState = companyInfoState.copy(
                         cashFlowInfo = result.data,
@@ -127,7 +272,12 @@ class CompanyInfoViewModel @Inject constructor(
             }
         }
     }
+    fun getCompanyInfo(){
+        viewModelScope.launch {
+            repository.getIntradayInfo("TSLA")
+        }
 
+    }
     fun getFormatedNumber(number: Long): String {
 
         return when {

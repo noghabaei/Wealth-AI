@@ -13,6 +13,7 @@ import com.example.wealthai.domain.model.BalanceSheet
 import com.example.wealthai.domain.model.CashFlow
 import com.example.wealthai.domain.model.CompanyInfo
 import com.example.wealthai.domain.model.CompanyListing
+import com.example.wealthai.domain.model.DailyInfo
 import com.example.wealthai.domain.model.IncomeStatement
 import com.example.wealthai.domain.model.IntradayInfo
 import com.example.wealthai.domain.repository.StockRepository
@@ -29,7 +30,8 @@ class StockRepositoryImpl @Inject constructor(
     private val api: StockApi,
     private val db: StockDatabase,
     private val companyListingParser: CSVParser<CompanyListing>,
-    private val intradayInfoParser: CSVParser<IntradayInfo>
+    private val intradayInfoParser: CSVParser<IntradayInfo>,
+    private val dailyInfoParser: CSVParser<DailyInfo>
 ): StockRepository {
 
     private val dao = db.dao
@@ -78,6 +80,24 @@ class StockRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getDailyInfo(symbol: String): Resource<List<DailyInfo>> {
+        return try {
+            val response = api.getDailyInfo(symbol)
+            val result = dailyInfoParser.parse(response.byteStream())
+            Resource.Success(result)
+
+        }catch (e: IOException){
+            e.printStackTrace()
+            Resource.Error(
+                message = "Couldn't load daily info"
+            )
+        }catch (e: HttpException){
+            e.printStackTrace()
+            Resource.Error(
+                message = "Couldn't load daily info"
+            )
+        }
+    }
     override suspend fun getIntradayInfo(symbol: String): Resource<List<IntradayInfo>> {
         return try {
             val response = api.getIntradayInfo(symbol)
